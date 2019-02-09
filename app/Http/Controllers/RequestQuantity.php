@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use App\Merchant;
+use App\request_forms;
 
 class RequestQuantity extends Controller
 {
@@ -20,4 +22,26 @@ class RequestQuantity extends Controller
 
         return view('request_quantity', compact('data'));
     }
+
+
+
+public function insert (Request $request, $id){
+
+
+
+        $result =  DB::Table('request_forms')->where('merchant_id',$id)
+        ->update(
+        array(
+        'agent_id' =>  $request->merchnt
+        )
+               );
+        return  redirect()->back();
+    }
+
+    
+    
+    
+
+
+
 }

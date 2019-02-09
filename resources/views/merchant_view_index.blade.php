@@ -12,13 +12,30 @@
         <th> Total Charge</th>
         <th> Receive amount</th>
         <th> Dues amount</th>
-
-        <th>Action</th>
+        <th> Assign Agent</th>
+        
        </tr>
   </thead>
   <tbody>
+
+
     @foreach($result as $row)
-      <tr>
+    
+@php
+
+
+
+$data=DB::table('request_forms')->where('request_forms.merchant_id',$row->cid)->where('request_forms.agent_id',0)->get(); 
+if(count($data) ==0){
+  continue;
+}else{
+  
+}
+
+
+@endphp
+       <tr>
+ 
         <td>{{$row->name}}</td>
         <td>{{$row->address}}</td>
         <td>{{$row->phone}}</td>
@@ -37,34 +54,61 @@ $charge = DB::table('request_forms')
 	
   ->sum('zones.charge');
 
-//dd($amount);
+  $agents= DB::table('agents')->get();
+
+  //$data['data']=DB::table('agents')->get();
+  //$datas = DB::table('request_forms')->select('agent_id')->get();
+
+
+  
 
           ?>
  
         <td>
-                    
-        <a class='btn btn-info btn-sm' href="{{URL::to('/get_details',$row->cid)}}" style="display:block;">{{$data}}</a>
+              
+         
+        <a class='btn btn-info btn-sm' href="{{URL::to('/get_details', $row->cid) }}" >{{$data}}</a>
+       
           
         </td>
           <td>{{$charge}} </td>
           <td>{{$balance}} </td>
       <td>{{($charge)-($balance)}}</td>
+               
         
-        
-        <td>
-          <!-- To make sure we have read access, wee need to validate the privilege -->
-          @if(CRUDBooster::isUpdate() && $button_edit)
-          <a class='btn btn-success btn-sm' href='{{CRUDBooster::mainpath("edit/$row->id")}}'>Edit</a>
-          @endif
-          
-          @if(CRUDBooster::isDelete() && $button_edit)
-          <a class='btn btn-danger btn-sm' href='{{CRUDBooster::mainpath("delete/$row->id")}}'>Delete</a>
-          @endif
-        </td>
+          <td>
+            <form action="{{URL::to('/merchant/added',$row->cid )}}" method="post">
+              @csrf
+                  <select class="form-control" name="merchnt" id="merchnt" onchange="this.form.submit()">
+                      <option>Choose Agent</option>
+
+                    @foreach ($agents as $item)
+                    
+                  <option value="{{$item->cmsuser_id}}">{{$item->name}}</option>
+                                       
+                    @endforeach
+                        
+                   </select> 
+                   
+                 </form>
+                </td>
+             <td>
+          </td>
        </tr>
-    @endforeach
+
+       @endforeach
+    
   </tbody>
 </table>
+
+<script type="text/javascript">
+
+  jQuery(function() {
+    jQuery('#merchnt').change(function() {
+        this.form.submit();
+    });
+});
+</script>
 
 {{-- <!-- ADD A PAGINATION -->
 <p>{{$result->links()}}</p> --}}

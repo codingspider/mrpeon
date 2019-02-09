@@ -19,3 +19,6 @@ Route::get('/', function () {
 Route::get('/testsession', 'TestController@index');
 
 Route::get('/get_details/{id}', 'RequestQuantity@get');
+
+
+Route::post('/merchant/added/{id}', 'RequestQuantity@insert');
