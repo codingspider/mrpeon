@@ -25,7 +25,7 @@ class RequestQuantity extends Controller
 
 
 
-public function insert (Request $request, $id){
+public function assign_agent (Request $request, $id){
 
 
 

@@ -32,7 +32,7 @@
     @endforeach
   </tbody>
 </table>
-{{ CRUDBooster::myId()}}
+
 <!-- ADD A PAGINATION -->
 <p>{{$result->links()}}</p>
 @endsection

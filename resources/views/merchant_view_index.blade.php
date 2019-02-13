@@ -18,8 +18,7 @@
   </thead>
   <tbody>
 
-
-    @foreach($result as $row)
+ @foreach($result as $row)
     
 @php
 
@@ -56,8 +55,6 @@ $charge = DB::table('request_forms')
 
   $agents= DB::table('agents')->get();
 
-  //$data['data']=DB::table('agents')->get();
-  //$datas = DB::table('request_forms')->select('agent_id')->get();
 
 
   
@@ -101,14 +98,7 @@ $charge = DB::table('request_forms')
   </tbody>
 </table>
 
-<script type="text/javascript">
 
-  jQuery(function() {
-    jQuery('#merchnt').change(function() {
-        this.form.submit();
-    });
-});
-</script>
 
 {{-- <!-- ADD A PAGINATION -->
 <p>{{$result->links()}}</p> --}}

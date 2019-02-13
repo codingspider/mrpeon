@@ -1,11 +1,14 @@
 <?php namespace App\Http\Controllers;
 
 	use Session;
-	use Request;
+	//use Request;
 	use DB;
+	
 	use CRUDBooster;
+ use Illuminate\Support\Facades\Request;
 
-	class AdminRequestFormsController extends \crocodicstudio\crudbooster\controllers\CBController {
+
+	class AcceptRequestController extends \crocodicstudio\crudbooster\controllers\CBController {
 
 	    public function cbInit() {
 
@@ -25,51 +28,33 @@
 			$this->button_filter = true;
 			$this->button_import = false;
 			$this->button_export = false;
-			$this->table = "request_forms";
+			$this->table = "merchants";
 			# END CONFIGURATION DO NOT REMOVE THIS LINE
 
 			# START COLUMNS DO NOT REMOVE THIS LINE
 			$this->col = [];
 			$this->col[] = ["label"=>"Name","name"=>"name"];
-			$this->col[] = ["label"=>"Email","name"=>"email"];
 			$this->col[] = ["label"=>"Address","name"=>"address"];
 			$this->col[] = ["label"=>"Phone","name"=>"phone"];
-			$this->col[] = ["label"=>"Description","name"=>"description"];
-			//$this->col[] = ["label"=>"Status","name"=>"status"];
-			//$this->col[] = ["label"=>"Delivery Man Id","name"=>"delivery_man_id"];
-			
+			$this->col[] = ["label"=>"Cmsuser Id","name"=>"cmsuser_id"];
 			# END COLUMNS DO NOT REMOVE THIS LINE
 
 			# START FORM DO NOT REMOVE THIS LINE
 			$this->form = [];
 			$this->form[] = ['label'=>'Name','name'=>'name','type'=>'text','validation'=>'required|string|min:3|max:70','width'=>'col-sm-10','placeholder'=>'You can only enter the letter only'];
-			$this->form[] = ['label'=>'Email','name'=>'email','type'=>'email','validation'=>'required|min:1|max:255|email|unique:request_forms','width'=>'col-sm-10','placeholder'=>'Please enter a valid email address'];
 			$this->form[] = ['label'=>'Address','name'=>'address','type'=>'text','validation'=>'required|min:1|max:255','width'=>'col-sm-10'];
 			$this->form[] = ['label'=>'Phone','name'=>'phone','type'=>'number','validation'=>'required|numeric','width'=>'col-sm-10','placeholder'=>'You can only enter the number only'];
-			$this->form[] = ['label'=>'Description','name'=>'description','type'=>'text','validation'=>'required|min:1|max:255','width'=>'col-sm-10'];
-			$this->form[] = ['label'=>'Status','name'=>'status','type'=>'text','validation'=>'required|min:1|max:255','width'=>'col-sm-10'];
-			//$this->form[] = ['label'=>'Delivery Man Id','name'=>'delivery_man_id','type'=>'number','width'=>'col-sm-10'];
-			$this->form[] = ['label'=>'Merchant Id','name'=>'merchant_id','type'=>'hidden','width'=>'col-sm-10'];
-			//$this->form[] = ['label'=>'Agent Id','name'=>'agent_id','type'=>'number','width'=>'col-sm-10'];
-			$this->form[] = ['label'=>'Zone Id','name'=>'zone_id','type'=>'number','validation'=>'required','width'=>'col-sm-10',"datatable"=>"zones,name","type"=>"select2"];
-			$this->form[] = ['label'=>'Receive Amount','name'=>'receive_amount','type'=>'money','validation'=>'required|integer|min:0','width'=>'col-sm-10'];
-			$this->form[] = ['label'=>'cmsuser_id','name'=>'cmsuser_id','type'=>'hidden'];
-			$this->form[] = ['label'=>'string','name'=>'string','type'=>'hidden'];
+			$this->form[] = ['label'=>'Cmsuser Id','validation'=>'required|min:1|max:255','width'=>'col-sm-10','datatable'=>'cmsuser,id'];
+			$this->form[] = ['label'=>'Email','name'=>'email','type'=>'email','validation'=>'required','width'=>'col-sm-9'];
+			$this->form[] = ['label'=>'Password','name'=>'password','type'=>'password','validation'=>'required','width'=>'col-sm-6'];
 			# END FORM DO NOT REMOVE THIS LINE
 
 			# OLD START FORM
 			//$this->form = [];
-			//$this->form[] = ['label'=>'Name','name'=>'name','type'=>'text','validation'=>'required|string|min:3|max:70','width'=>'col-sm-10','placeholder'=>'You can only enter the letter only'];
-			//$this->form[] = ['label'=>'Email','name'=>'email','type'=>'email','validation'=>'required|min:1|max:255|email|unique:request_forms','width'=>'col-sm-10','placeholder'=>'Please enter a valid email address'];
-			//$this->form[] = ['label'=>'Address','name'=>'address','type'=>'text','validation'=>'required|min:1|max:255','width'=>'col-sm-10'];
-			//$this->form[] = ['label'=>'Phone','name'=>'phone','type'=>'number','validation'=>'required|numeric','width'=>'col-sm-10','placeholder'=>'You can only enter the number only'];
-			//$this->form[] = ['label'=>'Description','name'=>'description','type'=>'text','validation'=>'required|min:1|max:255','width'=>'col-sm-10'];
-			//$this->form[] = ['label'=>'Status','name'=>'status','type'=>'text','validation'=>'required|min:1|max:255','width'=>'col-sm-10'];
-			//$this->form[] = ['label'=>'Delivery Man Id','name'=>'delivery_man_id','type'=>'number','width'=>'col-sm-10'];
-			//$this->form[] = ['label'=>'Merchant Id','name'=>'merchant_id','type'=>'number','width'=>'col-sm-10'];
-			//$this->form[] = ['label'=>'Agent Id','name'=>'agent_id','type'=>'number','width'=>'col-sm-10'];
-			//$this->form[] = ['label'=>'Zone Id','name'=>'id','type'=>'select2','validation'=>'required|integer|min:0','width'=>'col-sm-10','datatable'=>'zone,id'];
-			//$this->form[] = ['label'=>'Receive Amount','name'=>'receive_amount','type'=>'money','validation'=>'required|integer|min:0','width'=>'col-sm-10'];
+			//$this->form[] = ["label"=>"Name","name"=>"name","type"=>"text","required"=>TRUE,"validation"=>"required|string|min:3|max:70","placeholder"=>"You can only enter the letter only"];
+			//$this->form[] = ["label"=>"Address","name"=>"address","type"=>"text","required"=>TRUE,"validation"=>"required|min:1|max:255"];
+			//$this->form[] = ["label"=>"Phone","name"=>"phone","type"=>"number","required"=>TRUE,"validation"=>"required|numeric","placeholder"=>"You can only enter the number only"];
+			//$this->form[] = ["label"=>"Cmsuser Id","name"=>"cmsuser_id","type"=>"select2","required"=>TRUE,"validation"=>"required|min:1|max:255","datatable"=>"cmsuser,id"];
 			# OLD END FORM
 
 			/* 
@@ -86,6 +71,7 @@
 	        */
 	        $this->sub_module = array();
 
+			$this->sub_module[] = ['label'=>'Photos','path'=>'photos','parent_columns'=>'merchants,request_forms','foreign_key'=>'merchant_id','button_color'=>'success','button_icon'=>'fa fa-bars'];
 
 	        /* 
 	        | ---------------------------------------------------------------------- 
@@ -98,7 +84,8 @@
 	        | @showIf 	   = If condition when action show. Use field alias. e.g : [id] == 1
 	        | 
 	        */
-	        $this->addaction = array();
+            $this->addaction = array();
+            
 
 
 	        /* 
@@ -204,7 +191,9 @@
 	        | $this->load_js[] = asset("myfile.js");
 	        |
 	        */
-	        $this->load_js = array();
+			$this->load_js = array();
+			
+	
 	        
 	        
 	        
@@ -256,15 +245,8 @@
 	    |
 	    */
 	    public function hook_query_index(&$query) {
-
-			// $id=CRUDBooster::myId();
-			// //dd($id);
-			// if(!CRUDBooster::isSuperadmin()) {
-	        // 	$query->where('request_forms.cmsuser_id', $id);
-	        // 	}
-			
-			
-	       
+	        //Your code here
+	            
 	    }
 
 	    /*
@@ -284,10 +266,18 @@
 	    | @arr
 	    |
 	    */
-	    public function hook_before_add(&$postdata) {        
-	        //Your code here
-
-	    }
+	    public function hook_before_add(&$postdata) { 
+			$data=[];
+	        $data['email']=$postdata['email'];
+            $data['password']=$postdata['password'];
+			$data['name']=$postdata['name'];
+			$data['id_cms_privileges']=2;
+			$id=DB::table('cms_users')->insertGetId($data);
+        
+            unset($postdata['email']);
+            unset($postdata['password']);
+			$postdata['cmsuser_id']=$id;
+		}
 
 	    /* 
 	    | ---------------------------------------------------------------------- 
@@ -353,39 +343,63 @@
 
 
 		//By the way, you can still create your own method in here... :) 
-		
-		public function getAdd() {
-			//Create an Auth
-			if(!CRUDBooster::isCreate() && $this->global_privilege==FALSE || $this->button_add==FALSE) {    
-			  CRUDBooster::redirect(CRUDBooster::adminPath(),trans("crudbooster.denied_access"));
-			}
-			
-			$data = [];
-			$data['page_title'] = 'Add Data';
-			
-			//Please use cbView method instead view method from laravel
-			$this->cbView('custom_add_view',$data);
+	
+
+public function getIndex() {
+  //First, Add an auth
+   if(!CRUDBooster::isView()) CRUDBooster::denyAccess();
+   
+   //Create your own query 
+   $data = [];
+   $data['page_title'] = 'Products Data';
+   $data['result'] = DB::table('merchants')
+    ->join('cms_users', 'merchants.cmsuser_id', '=', 'cms_users.id')
+    //->join('request_forms', 'request_forms.merchant_id', '=', 'merchants.id')
+	->select('merchants.*', 'cms_users.id as cid')
+	->get();
+
+    
+   //Create a view. Please use `cbView` method instead of view method from laravel.
+   $this->cbView('merchant.accept_request',$data);
+   }
+
+   public function getdetails($id){
+
+    $data=DB::table('request_forms')->where('merchant_id',$id)->get();
+
+
+    return view ('merchant.getdetails', compact('data'));
+   }
+
+ 
+   public function postApprove(Request $request) {
+	   
+	//$data['status']=$request->checkbox;
+
+	$data['status'] = $_POST['accept'];
+	
+	
+	$p=$_POST['pid'];
+
+	
+        
+	if($p){
+
+	foreach($p as $v){
+	  $s= DB::table('request_forms')->where('request_forms.id',$v)->update($data);
+	  
+		}if ($s) {
+
+			return redirect()->back()->with('message', 'Information updated succesfully');
+			  
 		  }
-
-		  public function getIndex() {
-			//First, Add an auth
-			 if(!CRUDBooster::isView()) CRUDBooster::denyAccess();
-			 
-			 //Create your own query 
-			 $id=CRUDBooster::myId();
-
-			 
-			 $data = [];
-			 $data['page_title'] = 'Request Data';
-			 $data['result'] = DB::table('request_forms')
-			
-			 ->where('request_forms.merchant_id', $id)->paginate(5);
-
-			 
-			 
-			 //Create a view. Please use `cbView` method instead of view method from laravel.
-			 $this->cbView('request_view_index',$data);
-		  }
-
-
 	}
+		   
+
+
+ 
+}
+
+
+}
+

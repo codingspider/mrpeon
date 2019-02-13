@@ -46,11 +46,15 @@
             <input type='text' name='receive_amount' required class='form-control'/>
           </div> 
 
+          <input type="hidden" name="string" value="<?php echo substr(md5(mt_rand()), 0, 7); ?>">
+
           <input type="hidden" name="status" value="1">
           <input type="hidden" name="merchant_id" value="{{ CRUDBooster::myId()}}">
         {{-- <input type="hidden" name="" value="{{ CRUDBooster::myId()}}" --}}
          
         <!-- etc .... -->
+
+
         
      
     </div>
