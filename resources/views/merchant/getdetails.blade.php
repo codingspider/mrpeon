@@ -9,11 +9,7 @@
     <tr>
     
     <tr class="info">
-        @if(session()->has('message'))
-        <div class="alert alert-success">
-            {{ session()->get('message') }}
-        </div>
-    @endif
+       
 
     <form action="{{URL::to('application/approve') }}" method="post">
 

@@ -1,113 +1,69 @@
-<!-- First, extends to the CRUDBooster Layout -->
-@extends('crudbooster::admin_template')
+@extends('crudbooster::admin_template') 
 @section('content')
 
-<html>
+
+<div class="container box">
+    
+    <h3 align="center">Live search </h3><br />
+    <div class="panel panel-default">
+     <div class="panel-heading">Search  Data</div>
+     <div class="panel-body">
+      <div class="form-group">
+       <input type="text" name="search" id="search" class="form-control" placeholder="Search Customer Data" />
+      </div>
+      <div class="table-responsive">
+       <h3 align="center">Total Data : <span id="total_records"></span></h3>
+       <table class="table table-striped table-bordered">
+        <thead>
+         <tr>
+          <th> Name</th>
+          <th>Address</th>
+          <th>Phone</th>
+          <th>Email</th>
+          <th>Action</th>
+         </tr>
+        </thead>
+        <tbody>
  
-<head>
+        </tbody>
+       </table>
+      </div>
+     </div>    
+    </div>
+   </div>
+  </body>
+ </html>
  
-<meta name="_token" content="{{ csrf_token() }}">
+ <script>
+ $(document).ready(function(){
  
+  fetch_customer_data();
  
+  function fetch_customer_data(query = '')
+  {
+   $.ajax({
+    url:"{{ route('search') }}",
+    method:'GET',
+    data:{query:query},
+    dataType:'json',
+    success:function(data)
+    {
+     $('tbody').html(data.table_data);
+     $('#total_records').text(data.total_data);
+    }
+   })
+  }
  
-<title>Live Search</title>
- 
-<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
- 
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
- 
-</head>
- 
-<body>
- 
-<div class="container">
- 
-<div class="row">
- 
-<div class="panel panel-default">
- 
-<div class="panel-heading">
- 
-<h3>Search info </h3>
- 
-</div>
- 
-<div class="panel-body">
- 
-<div class="form-group">
- 
-<input type="text" class="form-controller" id="search" name="search" >
- 
-</div>
- 
-<table class="table table-bordered table-hover">
- 
-<thead>
- 
-<tr>
- 
-<th>ID</th>
- 
-<th> Name</th>
- 
-<th>Email</th>
- 
-<th>Phone</th>
- 
-</tr>
- 
-</thead>
- 
-<tbody>
- 
-</tbody>
- 
-</table>
- 
-</div>
- 
-</div>
- 
-</div>
- 
-</div>
- 
-<script type="text/javascript">
- 
-$('#search').on('keyup',function(){
- 
-$value=$(this).val();
- 
-$.ajax({
- 
-type : 'get',
- 
-url : '{{URL::to('/live_search/action')}}',
- 
-data:{'search':$value},
- 
-success:function(data){
- 
-$('tbody').html(data);
- 
-}
- 
-});
+  $(document).on('keyup', '#search', function(){
+   var query = $(this).val();
+   fetch_customer_data(query);
+   
+  });
+ });
+ </script>
+
  
  
- 
-})
- 
-</script>
- 
-<script type="text/javascript">
- 
-$.ajaxSetup({ headers: { 'csrftoken' : '{{ csrf_token() }}' } });
- 
-</script>
- 
-</body>
- 
-</html>
-  
+
+
 @endsection

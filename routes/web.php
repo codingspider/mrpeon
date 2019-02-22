@@ -2,12 +2,12 @@
 
 
 
+
 Route::get('/', function () {
     return view('welcome');
 });
 
 
-Route::get('/testsession', 'TestController@index');
 
 Route::get('/get_details/{id}', 'RequestQuantity@get');
 
@@ -25,4 +25,15 @@ Route::post('application/reject/{id}', 'AcceptRequestController@postReject');
 
 Route::get('/delivery/man/live/search', 'DeliveryManSearchController@index');
 
-Route::get('/live_search/action', 'DeliveryManSearchController@action');
+Route::get('/delivery/man/live/search/result', 'DeliveryManSearchController@action')->name('search');
+
+Route::get('details/pages/barcode', 'BarcodeController@barcode');
+
+Route::get('details/pages/barcode/view/{id}', 'BarcodeController@details');
+
+
+Route::get('details/pages/barcode/view/', 'BarcodeController@search');
+
+
+
+
