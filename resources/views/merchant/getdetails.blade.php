@@ -9,6 +9,10 @@
     <tr>
     
     <tr class="info">
+
+        @php
+        $rokon = DB::table('zones')->get();
+    @endphp
        
 
     <form action="{{URL::to('application/approve') }}" method="post">
@@ -23,6 +27,8 @@
               <th>Name</th>
               <th>Email</th>
               <th>Phone Number</th>
+              <th>Receive</th>
+              <th>charge</th>
               <th>Status</th>
             </tr>
           </thead>
@@ -36,6 +42,15 @@
             <td>{{$passport->id}}</td>
               <td>{{$passport->email}}</td>
               <td>{{$passport->phone}}</td>
+              <td>{{$passport->receive_amount}}</td>
+              <td><select class="form-control">
+                @foreach ($rokon as $item)
+              <option value="{{ $item->id }}">{{ $item->name }}</option>
+                @endforeach
+                
+              
+              </select></td>
+
               <td>@php
                   if($passport->status == 2)
                   echo '<span style="background-color: #00FA9A">Accepted</span>';
@@ -45,6 +60,7 @@
               @endphp
               
             </td>
+
              
             </tr>
             @endforeach

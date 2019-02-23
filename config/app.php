@@ -163,6 +163,7 @@ return [
         Illuminate\Validation\ValidationServiceProvider::class,
         Illuminate\View\ViewServiceProvider::class,
         Milon\Barcode\BarcodeServiceProvider::class,
+        ConsoleTVs\Charts\ChartsServiceProvider::class,
 
         /*
          * Package Service Providers...
@@ -230,6 +231,7 @@ return [
         'DNS1D' => Milon\Barcode\Facades\DNS1DFacade::class,
         'DNS2D' => Milon\Barcode\Facades\DNS2DFacade::class,
         'Carbon' => 'Carbon\Carbon',
+        'Charts' => ConsoleTVs\Charts\Facades\Charts::class,
 
     ],
 

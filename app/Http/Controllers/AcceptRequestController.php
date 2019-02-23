@@ -365,7 +365,11 @@ public function getIndex() {
 
    public function getdetails($id){
 
-    $data=DB::table('request_forms')->where('merchant_id',$id)->get();
+	$data=DB::table('request_forms')
+	
+	->join('zones', 'zones.id', '=', 'request_forms.zone_id')
+	->select('request_forms.*', 'zones.charge')
+	->where('merchant_id',$id)->get();
 
 
     return view ('merchant.getdetails', compact('data'));
