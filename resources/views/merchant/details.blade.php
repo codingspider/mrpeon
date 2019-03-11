@@ -18,13 +18,15 @@
 
                 <span>..........................................</span><br>
                 <b class="py-2"> Recipient Signature</b>
+                <br>
               </div>
               <p><?php
 
+                echo "<br>";
               //echo DNS1D::getBarcodeHTML($details->string, "C128");
               echo DNS1D::getBarcodeSVG($details->string, "C39");
               ?></p>
-              <p style="margin-left:50px">{{$details->string}}</p>
+              
           </div>
         </div>
       </section><br><br><br><br>

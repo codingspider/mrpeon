@@ -24,7 +24,7 @@
         <td>{{ $detail->phone }}</td>
         <td>{{ $detail->receive_amount }}</td>
         <td>{{ $detail->description}}</td>
-        <td><a href="{{ URL::to('details/pages/barcode/view', $detail->id)}}" class="btn btn-warning" >Details</a></td>
+        <td><a href="{{ URL::to('details/pages/barcode/view', $detail->id)}}" class="btn btn-warning" >Print</a></td>
             
         
     </tr>

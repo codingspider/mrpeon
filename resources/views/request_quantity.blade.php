@@ -11,6 +11,7 @@
       <th>Email</th>
       <th>Phone</th>
       <td>Address</td>
+      <td>Description</td>
     </tr>
     </thead>
     <tbody>
@@ -23,6 +24,7 @@
     <td>{{$item->email}}</td>
     <td>{{$item->phone}}</td>
     <td>{{$item->address}}</td>
+    <td>{{$item->description}}</td>
 
     
     </tr>
